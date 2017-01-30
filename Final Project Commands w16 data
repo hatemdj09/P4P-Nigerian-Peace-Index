@@ -1,0 +1,36 @@
+install.packages("forecast")
+library(forecast)
+BH.Borno11.14.test <- read.csv("~/R Project Documentation/BH.Borno11.14.test.csv")
+
+##This CSV contains Columns Date and Count for 2011-2014 Boko Haram reported attacks in Borno State##
+
+View(BH.Borno11.14.test)
+BH11.14 <- read.csv("~/R Project Documentation/BH.Borno11.14.test.csv")
+BH11.14ts <- ts(BH11.14, start = c(2011,1), end = c(2014,12), frequency = 12)
+BH11.14ts2 <- window(BH11.14ts, start=c(2011, 1), end=c(2014, 12))
+plot(BH11.14ts2)
+plot(BH11.14ts)
+auto.arima(BH11.14ts)
+BH.AA<- auto.arima(BH11.14ts)
+accuracy(BH.AA)
+plot(forecast(BH.AA, 12))
+print(BH.AA,12)
+print(forecast(BH.AA,12))
+BH.Borno15pred15act <- read.csv("~/R Project Documentation/BH.Borno15pred15act.csv")
+
+##This CSV contains the columns Date, Predicted, and Actual for all Boko Haram attacks in Borno State in 2015##
+
+Pred15 <- BH.Borno15pred15act
+install.packages("ggplot2")
+library(ggplot2)
+plot.ts(Pred15[,2:3], xlab = "Month", ylab = "Attacks", plot.type=c("single"))
+BH16 <- BH.Borno.11.16
+
+##BH.Borno.11.16 contains the monthly count of all attacks in Borno from 2011-2016##
+
+BH16ts <- ts(BH16$Count, start = c(2011, 1), end = c(2016, 12), frequency = 12)
+plot(BH16ts)
+BH.16AA <- auto.arima(BH16ts)
+accuracy(BH.16AA)
+plot(forecast(BH.16AA, 12))
+print(forecast(BH.16AA,12))
